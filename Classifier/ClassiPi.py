@@ -8,8 +8,8 @@ import inception
 try:
   model = inception.Inception()
 except FileNotFoundError:
-  print ('###### error ###### this script requires inception.maybe_download() executed from init.py at least once')
-  sys.exit('error')
+  print ('###### error ######')
+  sys.exit('this script requires inception.maybe_download() executed from init.py at least once')
 
 # Helper-function for classifying and plotting images
 def classify(image_path):
@@ -21,16 +21,16 @@ def main():
   if len(sys.argv) >= 2:
     image_path = sys.argv[1]
   else:
-    print ('###### error ###### you need to specify a valid image')
-    sys.exit('error')
+    print ('###### error ######')
+    sys.exit('you need to specify a valid image')
 
   # We use the test image that comes with inception model v3 if arg 1 is 'test'
   if sys.argv[1] == 'test':
     image_path = os.path.join(inception.data_dir, 'cropped_panda.jpg')
 
   if not os.path.exists(image_path):
-    print ('###### error ###### not a valid file path')
-    sys.exit('error')
+    print ('###### error ######')
+    sys.exit('not a valid file path')
 
   print ("Classifying image ", image_path)
   print ('###### results ######')
