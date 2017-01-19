@@ -4,10 +4,12 @@ import os
 # Functions and classes for loading and using the Inception model v3.
 import inception
 
-print ('NB: this script requires inception.maybe_download() executed from init.py at least once')
-
 # Load the Inception model so it is ready for classifying images.
-model = inception.Inception()
+try:
+  model = inception.Inception()
+except FileNotFoundError:
+  print ('###### error ###### this script requires inception.maybe_download() executed from init.py at least once')
+  sys.exit('error')
 
 # Helper-function for classifying and plotting images
 def classify(image_path):
