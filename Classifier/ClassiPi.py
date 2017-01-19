@@ -25,13 +25,14 @@ def main():
   else:
     print ('###### error ###### you need to specify a valid image')
     sys.exit(1)
-  if not os.path.exists(file_path):
-    print ('###### error ###### not a valid file path')
-    sys.exit(1)
 
   # We use the test image that comes with inception model v3 if arg 1 is 'test'
   if sys.argv[1] == 'test':
     image_path = os.path.join(inception.data_dir, 'cropped_panda.jpg')
+
+  if not os.path.exists(image_path):
+    print ('###### error ###### not a valid file path')
+    sys.exit(1)
 
   print ("Classifying image ", image_path)
   print ('###### results ######')
