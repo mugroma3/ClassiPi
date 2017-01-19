@@ -52,7 +52,6 @@
 
 import numpy as np
 import tensorflow as tf
-tf.logging.set_verbosity(tf.logging.ERROR)
 import download
 from cache import cache
 import os
@@ -251,6 +250,7 @@ class Inception:
     tensor_name_transfer_layer = "pool_3:0"
 
     def __init__(self):
+        tf.logging.set_verbosity(tf.logging.ERROR)
         # Mappings between class-numbers and class-names.
         # Used to print the class-name as a string e.g. "horse" or "plant".
         self.name_lookup = NameLookup()
