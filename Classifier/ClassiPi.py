@@ -1,14 +1,10 @@
 import sys
-import tensorflow as tf
-import numpy as np
 import os
 
 # Functions and classes for loading and using the Inception model v3.
 import inception
 
-print ('Tensorflow version ', tf.__version__)
-
-inception.maybe_download()
+print ('NB: this script requires inception.maybe_download() executed from init.py at least once')
 
 # Load the Inception model so it is ready for classifying images.
 model = inception.Inception()
@@ -24,7 +20,7 @@ def main():
     image_path = sys.argv[1]
   else:
     print ('###### error ###### you need to specify a valid image')
-    sys.exit(1)
+    sys.exit('error')
 
   # We use the test image that comes with inception model v3 if arg 1 is 'test'
   if sys.argv[1] == 'test':
@@ -32,7 +28,7 @@ def main():
 
   if not os.path.exists(image_path):
     print ('###### error ###### not a valid file path')
-    sys.exit(1)
+    sys.exit('error')
 
   print ("Classifying image ", image_path)
   print ('###### results ######')
