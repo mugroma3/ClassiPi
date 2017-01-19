@@ -51,6 +51,8 @@
 ########################################################################
 
 import numpy as np
+import logging
+logging.getLogger("tensorflow").setLevel(logging.ERROR)
 import tensorflow as tf
 import download
 from cache import cache
