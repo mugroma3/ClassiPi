@@ -52,6 +52,7 @@
 
 import numpy as np
 import tensorflow as tf
+tf.logging.set_verbosity(tf.logging.ERROR)
 import download
 from cache import cache
 import os
