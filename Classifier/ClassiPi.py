@@ -36,7 +36,7 @@ def main():
   print ('###### results ######')
   import warnings
   with warnings.catch_warnings():
-    warnings.filterwarnings("ignore",category=DeprecationWarning)
+    warnings.simplefilter("ignore")
     classify(image_path)
 
 if __name__ == '__main__':
