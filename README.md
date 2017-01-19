@@ -1,4 +1,4 @@
-# ![ClassiPi logo](/logo.png?raw=true | width=60) ClassiPi
+# ![ClassiPi logo](/logo.png | width=60) ClassiPi
 
 
 A robot that can understand what's in front of it thanks to a convolutional neural network (Inception model V3 by Google).
