@@ -3,7 +3,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 # Functions and classes for loading and using the Inception model v3.
-from libraries import inception
+import inception
 
 # Load the Inception model so it is ready for classifying images.
 try:
