@@ -34,7 +34,10 @@ def main():
 
   print ("Classifying image ", image_path)
   print ('###### results ######')
-  classify(image_path)
+  import warnings
+  with warnings.catch_warnings():
+    warnings.filterwarnings("ignore",category=DeprecationWarning)
+    classify(image_path)
 
 if __name__ == '__main__':
   main()
