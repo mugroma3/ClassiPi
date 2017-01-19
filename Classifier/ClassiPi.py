@@ -5,12 +5,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='3'
 # Functions and classes for loading and using the Inception model v3.
 import inception
 
-# Helper-function for classifying and plotting images
-def classify(image_path):
-    #display(Image(image_path))
-    pred = model.classify(image_path=image_path)
-    model.print_scores(pred=pred, k=10, only_first_name=True)
-
 def main():
   if len(sys.argv) >= 2:
     image_path = sys.argv[1]
@@ -33,6 +27,12 @@ except FileNotFoundError:
   model.close()
   print ('###### error ######')
   sys.exit('this script requires inception.maybe_download() executed from init.py at least once')
+
+# Helper-function for classifying and plotting images
+def classify(image_path):
+  #display(Image(image_path))
+  pred = model.classify(image_path=image_path)
+  model.print_scores(pred=pred, k=10, only_first_name=True)
 
   print ("Classifying image ", image_path)
   print ('###### results ######')
