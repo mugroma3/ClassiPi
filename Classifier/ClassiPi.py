@@ -1,5 +1,6 @@
 import sys
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL']='3'
 
 # Functions and classes for loading and using the Inception model v3.
 import inception
@@ -8,6 +9,7 @@ import inception
 try:
   model = inception.Inception()
 except FileNotFoundError:
+  model.close()
   print ('###### error ######')
   sys.exit('this script requires inception.maybe_download() executed from init.py at least once')
 
@@ -21,6 +23,7 @@ def main():
   if len(sys.argv) >= 2:
     image_path = sys.argv[1]
   else:
+    model.close()
     print ('###### error ######')
     sys.exit('you need to specify a valid image')
 
@@ -29,6 +32,7 @@ def main():
     image_path = os.path.join(inception.data_dir, 'cropped_panda.jpg')
 
   if not os.path.exists(image_path):
+    model.close()
     print ('###### error ######')
     sys.exit('not a valid file path')
 
@@ -38,6 +42,7 @@ def main():
   with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     classify(image_path)
+  model.close()
 
 if __name__ == '__main__':
   main()
