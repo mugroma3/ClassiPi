@@ -5,14 +5,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='3'
 # Functions and classes for loading and using the Inception model v3.
 import inception
 
-# Load the Inception model so it is ready for classifying images.
-try:
-  model = inception.Inception()
-except FileNotFoundError:
-  model.close()
-  print ('###### error ######')
-  sys.exit('this script requires inception.maybe_download() executed from init.py at least once')
-
 # Helper-function for classifying and plotting images
 def classify(image_path):
     #display(Image(image_path))
@@ -23,7 +15,6 @@ def main():
   if len(sys.argv) >= 2:
     image_path = sys.argv[1]
   else:
-    model.close()
     print ('###### error ######')
     sys.exit('you need to specify a valid image')
 
@@ -32,9 +23,16 @@ def main():
     image_path = os.path.join(inception.data_dir, 'cropped_panda.jpg')
 
   if not os.path.exists(image_path):
-    model.close()
     print ('###### error ######')
     sys.exit('not a valid file path')
+
+# Load the Inception model so it is ready for classifying images.
+try:
+  model = inception.Inception()
+except FileNotFoundError:
+  model.close()
+  print ('###### error ######')
+  sys.exit('this script requires inception.maybe_download() executed from init.py at least once')
 
   print ("Classifying image ", image_path)
   print ('###### results ######')
