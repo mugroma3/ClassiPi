@@ -2,6 +2,7 @@ import sys
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import time
+from datetime import timedelta
 
 # Functions and classes for loading and using the Inception model v3.
 import inception
@@ -47,7 +48,8 @@ def main():
   end_time = time.time()
   time_dif = end_time - start_time
   # Print the time-usage.
-  print("Time usage: " + str(timedelta(seconds=int(round(time_dif)))))
+  print ('###### time usage ######')
+  print(str(timedelta(seconds=int(round(time_dif)))))
   model.close()
 
 if __name__ == '__main__':
