@@ -1,6 +1,8 @@
 import sys
+import signal
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+import warnings
 import time
 from datetime import timedelta
 
@@ -9,11 +11,23 @@ import inception
 
 import pygame
 import pygame.camera
+import pygame.surfarray
+
+from PIL import Image
+import numpy as np
 
 image_path = 'image.jpg'
 
+# getting image from camera
+pygame.camera.init()
+# pygame.camera.list_camera() #Camera detected or not
+cam = pygame.camera.Camera("/dev/video0",(640,480))
+
+# Making model global
+model = None
+
 # Helper-function for classifying and plotting images
-def classify(model, image_path, image):
+def classify(model, image_path=None, image=None):
     #display(Image(image_path))
     if image_path:
         pred = model.classify(image_path=image_path)
@@ -25,13 +39,6 @@ def classify(model, image_path, image):
     model.print_scores(pred=pred, k=10, only_first_name=True)
 
 def main():
-  # getting image from camera
-  pygame.camera.init()
-  #pygame.camera.list_camera() #Camera detected or not
-  cam = pygame.camera.Camera("/dev/video0",(640,480))
-  cam.start()
-  fps = 30.0
-  pygame.time.delay(int(1000 * 1.0/fps))
 
   # Load the Inception model so it is ready for classifying images.
   try:
@@ -42,33 +49,43 @@ def main():
     inception.maybe_download()
     model = inception.Inception()
   while True:
-    print ('###### input ######')
-    start_time = time.time()
+    try:
+      start_time_camera = time.time()
     
-    #os.remove(image_path)
-
-    if img == 0:
+      cam.start() 
+      # start and stop prevent the buffer from filling up with more useless frames
       img = cam.get_image()
-    else:
-      img = cam.get_image(img)
+      cam.stop()
+      image = pygame.surfarray.array3d(img)
+      image = np.rot90(image, 3)
+      end_time_camera = time.time()
+      
+      start_time = time.time()
+      print ("Classifying image from camera...")
+      with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        classify(model=model, image=image)
+      end_time = time.time()
+      time_dif_camera = end_time_camera - start_time_camera
+      time_dif = end_time - start_time
 
-    print ("Classifying image...")
-    
-    import warnings
-    with warnings.catch_warnings():
-      warnings.simplefilter("ignore")
-      classify(model, image=img)
-    end_time = time.time()
-    time_dif = end_time - start_time
-    # Print the time-usage.
-    print ('###### time usage ######')
-    print(str(timedelta(seconds=int(round(time_dif)))))
+      # Print the time-usage.
+      print ('###### time usage camera ######')
+      print(str(timedelta(seconds=int(round(time_dif_camera)))))
+      print ('###### time usage NN ######')
+      print(str(timedelta(seconds=int(round(time_dif)))))
 
-    # Save the image that was just classified (for debug)
-    pygame.image.save(img, image_path)
+      # Save the image that was just classified (for debug)
+      im = Image.fromarray(image) 
+      im.save(image_path)
+    except (KeyboardInterrupt, SystemExit, RuntimeError, SystemError):
+      cam.stop()
+      model.close()
 
-  cam.stop()
+def exit_gracefully(self, signum, frame):
+  # stuff to run when process is closed
   model.close()
 
 if __name__ == '__main__':
+  signal.signal(signal.SIGTERM, exit_gracefully)
   main()

@@ -92,4 +92,5 @@ ENV/
 *.psd
 Classifier/inception/
 Classifier/.vs/
+Classifier/image.jpg
 .vs/
