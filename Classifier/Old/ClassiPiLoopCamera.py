@@ -17,13 +17,11 @@ from PIL import Image
 import numpy as np
 
 image_path = 'image.jpg'
-debug = True
 
 # getting image from camera
 pygame.camera.init()
 # pygame.camera.list_camera() #Camera detected or not
 cam = pygame.camera.Camera("/dev/video0",(640,480))
-cam.start() 
 
 # Making model global
 model = None
@@ -54,19 +52,12 @@ def main():
     try:
       start_time_camera = time.time()
     
-      # multiple times to empty the buffer
+      cam.start() 
+      # start and stop prevent the buffer from filling up with more useless frames
       img = cam.get_image()
-      img = cam.get_image()
-      img = cam.get_image()
-      
+      cam.stop()
       image = pygame.surfarray.array3d(img)
       image = np.rot90(image, 3)
-      
-      if debug: 
-            # Save the image that was just classified (for debug)
-            im = Image.fromarray(image) 
-            im.save(image_path)
-
       end_time_camera = time.time()
       
       start_time = time.time()
@@ -84,13 +75,15 @@ def main():
       print ('###### time usage NN ######')
       print(str(timedelta(seconds=int(round(time_dif)))))
 
+      # Save the image that was just classified (for debug)
+      im = Image.fromarray(image) 
+      im.save(image_path)
     except (KeyboardInterrupt, SystemExit, RuntimeError, SystemError):
       cam.stop()
       model.close()
 
 def exit_gracefully(self, signum, frame):
   # stuff to run when process is closed
-  cam.stop()
   model.close()
 
 if __name__ == '__main__':

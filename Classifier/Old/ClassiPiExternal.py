@@ -9,21 +9,7 @@ from datetime import timedelta
 # Functions and classes for loading and using the Inception model v3.
 import inception
 
-import pygame
-import pygame.camera
-import pygame.surfarray
-
-from PIL import Image
-import numpy as np
-
 image_path = 'image.jpg'
-debug = True
-
-# getting image from camera
-pygame.camera.init()
-# pygame.camera.list_camera() #Camera detected or not
-cam = pygame.camera.Camera("/dev/video0",(640,480))
-cam.start() 
 
 # Making model global
 model = None
@@ -51,46 +37,22 @@ def main():
     inception.maybe_download()
     model = inception.Inception()
   while True:
-    try:
-      start_time_camera = time.time()
-    
-      # multiple times to empty the buffer
-      img = cam.get_image()
-      img = cam.get_image()
-      img = cam.get_image()
-      
-      image = pygame.surfarray.array3d(img)
-      image = np.rot90(image, 3)
-      
-      if debug: 
-            # Save the image that was just classified (for debug)
-            im = Image.fromarray(image) 
-            im.save(image_path)
-
-      end_time_camera = time.time()
-      
+    try:     
       start_time = time.time()
       print ("Classifying image from camera...")
       with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        classify(model=model, image=image)
+        classify(model=model, image_path=image_path)
       end_time = time.time()
-      time_dif_camera = end_time_camera - start_time_camera
       time_dif = end_time - start_time
-
-      # Print the time-usage.
-      print ('###### time usage camera ######')
-      print(str(timedelta(seconds=int(round(time_dif_camera)))))
       print ('###### time usage NN ######')
       print(str(timedelta(seconds=int(round(time_dif)))))
 
     except (KeyboardInterrupt, SystemExit, RuntimeError, SystemError):
-      cam.stop()
       model.close()
 
 def exit_gracefully(self, signum, frame):
   # stuff to run when process is closed
-  cam.stop()
   model.close()
 
 if __name__ == '__main__':
