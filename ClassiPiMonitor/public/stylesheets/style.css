@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+
+#image, #classification {
+  float: left;
+}
+
+#classification {
+  padding-left: 20px;
+  font-size: 130%
+}
+
+#classification b {
+  text-transform: capitalize;
+  font-size: 110%;
+}
