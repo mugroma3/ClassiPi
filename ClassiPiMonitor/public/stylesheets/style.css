@@ -1,22 +1,49 @@
 body {
   padding: 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #FFFFFF url(/images/brain.png) fixed no-repeat bottom right;
+}
+
+h1 {
+  z-index: 999;
+  position: relative;
+}
+
+#logo {
+  vertical-align: middle;
 }
 
 a {
-  color: #00B7FF;
+  color: #004081;
+}
+
+#container {
+  background: rgba(255,255,255,0.5);
+  -moz-box-shadow: 0 0 50px 50px rgba(255,255,255,0.5);
+  -webkit-box-shadow: 0 0 50px 50px rgba(255,255,255,0.5);
+  box-shadow: 0px 0px 50px 50px rgba(255,255,255,0.5);
+  display: inline-block;
+  z-index: 0;
+  position: relative;
 }
 
 #image, #classification {
-  float: left;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#image {
+  border: 2px solid #666666;
 }
 
 #classification {
   padding-left: 20px;
-  font-size: 130%
+  font-size: 130%;
+  vertical-align: middle;
 }
 
 #classification b {
   text-transform: capitalize;
   font-size: 110%;
+  vertical-align: middle;
 }
