@@ -1,0 +1,15 @@
+###### results ######
+61.50% : medicine chest
+ 3.32% : projector
+ 2.46% : window shade
+ 2.24% : home theater
+ 1.01% : spotlight
+ 0.92% : wall clock
+ 0.82% : studio couch
+ 0.73% : radiator
+ 0.71% : dishwasher
+ 0.66% : sliding door
+###### time usage camera ######
+0:00:00
+###### time usage NN ######
+0:00:03
