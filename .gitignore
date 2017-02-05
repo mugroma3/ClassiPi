@@ -96,3 +96,5 @@ Classifier/results/
 Classifier/image.jpg
 .vs/
 ClassiPiMonitor/node_modules/
+ClassiPiMonitor/public/watching/
+
