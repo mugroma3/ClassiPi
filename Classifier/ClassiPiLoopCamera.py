@@ -46,12 +46,14 @@ def classify(model, image_path=None, image=None):
     else:
         pred = model.classify(image=image)
     # clear commands
-    #os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
     deleteContent(out_file)
     out_file.write('###### results ######\n')
-    out_file.write(model.get_scores(pred=pred, k=10, only_first_name=True))
-    #out_file.flush()
-    #os.fsync(out_file)
+    print('###### results ######')
+    results = model.get_scores(pred=pred, k=10, only_first_name=True)
+    out_file.write(results)
+    print(results)
+
 
 def main():
 
@@ -98,6 +100,10 @@ def main():
       out_file.write(str(timedelta(seconds=int(round(time_dif))))+"\n")
       out_file.flush()
       os.fsync(out_file)
+      print('###### time usage camera ######')
+      print(str(timedelta(seconds=int(round(time_dif_camera)))))
+      print('###### time usage NN ######')
+      print(str(timedelta(seconds=int(round(time_dif)))))
 
 
     except (KeyboardInterrupt, SystemExit, RuntimeError, SystemError):
