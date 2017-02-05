@@ -420,7 +420,7 @@ class Inception:
 
         return resized_image
 
-    def print_scores(self, pred, k=10, only_first_name=True):
+    def get_scores(self, pred, k=10, only_first_name=True):
         """
         Print the scores (or probabilities) for the top-k predicted classes.
 
@@ -444,6 +444,8 @@ class Inception:
         # The index is sorted lowest-to-highest values. Take the last k.
         top_k = idx[-k:]
 
+        result = ""
+
         # Iterate the top-k classes in reversed order (i.e. highest first).
         for cls in reversed(top_k):
             # Lookup the class-name.
@@ -453,7 +455,11 @@ class Inception:
             score = pred[cls]
 
             # Print the score and class-name.
-            print("{0:>6.2%} : {1}".format(score, name))
+            result += ("{0:>6.2%} : {1}".format(score, name))+"\n"
+        return result
+
+    def print_scores(self, pred, k=10, only_first_name=True):
+        print(self.get_scores(self, pred, k, only_first_name))
 
     def transfer_values(self, image_path=None, image=None):
         """
