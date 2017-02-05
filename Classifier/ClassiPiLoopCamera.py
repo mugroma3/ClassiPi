@@ -16,11 +16,11 @@ import pygame.surfarray
 from PIL import Image
 import numpy as np
 
-image_path = 'results/image.jpg'
+image_path = '../ClassiPiMonitor/public/watching/image.jpg'
 debug = True
 
 # Opening output file in write mode
-out_file = open("results/class.txt","w")
+out_file = open("../ClassiPiMonitor/public/watching/class.txt", "w")
 
 # getting image from camera
 pygame.camera.init()
