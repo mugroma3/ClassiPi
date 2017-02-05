@@ -75,7 +75,7 @@ def main():
       img = cam.get_image()
       
       image = pygame.surfarray.array3d(img)
-      image = np.rot90(image, 3)
+      image = np.fliplr(np.rot90(image, 3))
       
       if debug: 
             # Save the image that was just classified (for debug)
