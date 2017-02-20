@@ -1,7 +1,8 @@
 # ClassiPi <img src="/logo.png" width="60" alt="logo" />
 
-
 A robot that can understand what's in front of it thanks to a convolutional neural network (Inception model V3 by Google).
+
+![classipi](classipi.jpg)
 
 Everything runs with Python3 on Raspberry Pi 3 with a usb webcam.
 
